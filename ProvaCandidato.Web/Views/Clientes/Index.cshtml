@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ProvaCandidato.Data.Entidade.Cliente>
+﻿@model IEnumerable<ProvaCandidato.Models.Cliente>
 
 @{
     ViewBag.Title = "Index";
@@ -12,16 +12,13 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Cidade.Nome)
+            @Html.DisplayNameFor(model => model.nome)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nome)
+            @Html.DisplayNameFor(model => model.data_nascimento)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Ativo)
+            @Html.DisplayNameFor(model => model.codigo_cidade)
         </th>
         <th></th>
     </tr>
@@ -29,16 +26,13 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Cidade.Nome)
+            @Html.DisplayFor(modelItem => item.nome)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Nome)
+            @Html.DisplayFor(modelItem => item.data_nascimento)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.DataNascimento)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Ativo)
+            @Html.DisplayFor(modelItem => item.codigo_cidade)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Codigo }) |

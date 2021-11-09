@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using ProvaCandidato.Data;
+using ProvaCandidato.Models;
+using System;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ProvaCandidato.Data;
-using ProvaCandidato.Data.Entidade;
+using System.Web.Http.Filters;
+using System.Web.Http.Description;
+using System.Windows;
 
 namespace ProvaCandidato.Controllers
 {
@@ -18,8 +18,7 @@ namespace ProvaCandidato.Controllers
         // GET: Clientes
         public ActionResult Index()
         {
-            var clientes = db.Clientes.Include(c => c.Cidade);
-            return View(clientes.ToList());
+            return View(db.Clientes.ToList());
         }
 
         // GET: Clientes/Details/5
@@ -29,18 +28,17 @@ namespace ProvaCandidato.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
-            if (cliente == null)
+            if (db.Clientes.Find(id) == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(db.Clientes.Find(id));
         }
 
         // GET: Clientes/Create
+        [EnableQuery]
         public ActionResult Create()
         {
-            ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome");
             return View();
         }
 
@@ -49,21 +47,18 @@ namespace ProvaCandidato.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo,DataAtual")] Cliente cliente)
+        public ActionResult Create([Bind(Include = "Codigo,nome,data_nascimento,codigo_cidade")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
-
                 db.Clientes.Add(cliente);
                 db.SaveChanges();
                 return RedirectToAction("Index");
-            } 
-               
-            public partial class ClienteController
+                string message = "Parabens";
+                string title = "vc conseguiu criar um cliente";
+                MessageBox.Show(message, title);
+            }
 
-
-
-            ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome", cliente.CidadeId);
             return View(cliente);
         }
 
@@ -74,13 +69,11 @@ namespace ProvaCandidato.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
-            if (cliente == null)
+            if (db.Clientes.Find(id) == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome", cliente.CidadeId);
-            return View(cliente);
+            return View(db.Clientes.Find(id));
         }
 
         // POST: Clientes/Edit/5
@@ -88,15 +81,17 @@ namespace ProvaCandidato.Controllers
         // obter mais detalhes, veja https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Codigo,Nome,DataNascimento,CidadeId,Ativo")] Cliente cliente)
+        public ActionResult Edit([Bind(Include = "Codigo,nome,data_nascimento,codigo_cidade")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(cliente).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
+                string message = "Parabens";
+                string title = "vc conseguiu editar um cliente";
+                MessageBox.Show(message, title);
             }
-            ViewBag.CidadeId = new SelectList(db.Cidades, "Codigo", "Nome", cliente.CidadeId);
             return View(cliente);
         }
 
@@ -107,12 +102,11 @@ namespace ProvaCandidato.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = db.Clientes.Find(id);
-            if (cliente == null)
+            if (db.Clientes.Find(id) == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(db.Clientes.Find(id));
         }
 
         // POST: Clientes/Delete/5
@@ -120,10 +114,12 @@ namespace ProvaCandidato.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cliente cliente = db.Clientes.Find(id);
-            db.Clientes.Remove(cliente);
+            db.Clientes.Remove(db.Clientes.Find(id));
             db.SaveChanges();
             return RedirectToAction("Index");
+            string message = "Parabens";
+            string title = "vc conseguiu deletar um cliente";
+            MessageBox.Show(message, title);
         }
 
         protected override void Dispose(bool disposing)
@@ -134,5 +130,14 @@ namespace ProvaCandidato.Controllers
             }
             base.Dispose(disposing);
         }
+    }
+
+    public class Generic : Cidade
+    {
+
+    }
+    public class Generic2 : Cliente
+    {
+
     }
 }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using ProvaCandidato.Data;
+using ProvaCandidato.Data.Entidade;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using ProvaCandidato.Data;
-using ProvaCandidato.Data.Entidade;
+using System.Windows;
 
 namespace ProvaCandidato.Controllers
 {
@@ -16,9 +13,15 @@ namespace ProvaCandidato.Controllers
         private ContextoPrincipal db = new ContextoPrincipal();
 
         // GET: Cidades
-        public ActionResult Index()
+        public ActionResult Index
         {
-            return View(db.Cidades.ToList());
+            get
+            {
+                return View(db.Cidades.ToList());
+                string message = "Parabens";
+                string title = "vc conseguiu criar uma cidade";
+                MessageBox.Show(message, title);
+        }
         }
 
         // GET: Cidades/Details/5
@@ -53,6 +56,9 @@ namespace ProvaCandidato.Controllers
             {
                 db.Cidades.Add(cidade);
                 db.SaveChanges();
+                string message = "Parabens";
+                string title = "vc conseguiu editar uma cidade";
+                MessageBox.Show(message, title);
                 return RedirectToAction("Index");
             }
 
@@ -113,6 +119,9 @@ namespace ProvaCandidato.Controllers
             Cidade cidade = db.Cidades.Find(id);
             db.Cidades.Remove(cidade);
             db.SaveChanges();
+            string message = "Parabens";
+            string title = "vc conseguiu deletar uma cidade";
+            MessageBox.Show(message, title);
             return RedirectToAction("Index");
         }
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ProvaCandidato.Models
 {
@@ -17,4 +13,5 @@ namespace ProvaCandidato.Models
         public string nome { get; set; }
 
     }
+    public enum Nome : int { Londrina = 1, Paranagua = 2, Curitiba = 3, FozdoIguaçu = 4 }
 }
